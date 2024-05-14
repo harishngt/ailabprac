@@ -1,30 +1,20 @@
-# Define a dictionary with some predefined responses
-responses = {
-    "hello": "Hi there! How can I help you?",
-    "hi": "Hello! What can I do for you?",
-    "how are you": "I'm just a bot, but I'm doing great! How about you?",
-    "what is your name": "I am SimpleBot. What's your name?",
-    "bye": "Goodbye! Have a nice day!",
-    "exit": "Goodbye! Have a nice day!",
-    "quit": "Goodbye! Have a nice day!",
-}
-
-def get_response(user_input):
-    # Normalize the user input to lower case
-    normalized_input = user_input.lower()
-    # Find the response in the dictionary or return a default message
-    return responses.get(normalized_input, "I'm sorry, I don't understand that.")
-
-def chat():
-    print("Type something to begin (type 'bye', 'exit', or 'quit' to end the chat)...")
-    while True:
-        user_input = input("You: ")
-        if user_input.lower() in ["bye", "exit", "quit"]:
-            print("SimpleBot: Goodbye! Have a nice day!")
-            break
-        response = get_response(user_input)
-        print(f"SimpleBot: {response}")
-
-# Start the chat
-if __name__ == "__main__":
-    chat()
+import nltk
+from nltk.chat.util import Chat, reflections
+# Define patterns for the chatbot to recognize
+patterns = [
+(r'hi|hello|hey', ['Hello!', 'Hi there!', 'Hey!']),
+(r'how are you?', ['I am doing well, thank you!', 'I\'m good, thanks for asking.']),
+(r'what is your name?', ['You can call me Chatbot.', 'I\'m Chatbot, nice to meet you.']),
+(r'quit', ['Bye! Take care.']),
+]
+# Create a chatbot instance
+chatbot = Chat(patterns, reflections)
+# Start the conversation
+print("Welcome to the Chatbot!")
+print("Type 'quit' to exit.")
+while True:
+user_input = input("You: ")
+response = chatbot.respond(user_input)
+print("Chatbot:", response)
+if user_input.lower() == 'quit':
+break
